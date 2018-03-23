@@ -6,12 +6,12 @@
 
 ## How to load package in Go
 
-```
+```go
 import "flag"
 import "fmt"
 ```
 
-```
+```go
 import (
     "flag"
     "fmt"
@@ -24,7 +24,7 @@ import (
 
 **flag_test.go**
 
-```
+```go
 package main
 
 import "fmt"
@@ -37,8 +37,7 @@ func main() {
 }
 ```
 
-go build 
-
+### go build 
 
 
 ```
@@ -47,6 +46,7 @@ go build command-line-arguments: no non-test Go files in /Users/jinsoo.park/Desk
 
 ```
 
+### Error ?!
 In go lang, the file name xxx_test.go means that this file is test case.
 so please set another name for it.
 
@@ -61,7 +61,7 @@ $ ls -al
 -rw-r--r--@   1 jinsoo.park  INTRA\Domain Users      160 Mar 22 15:01 flag_example.go
 ```
 
-flag_example is executable
+### flag_example is executable
 
 ```
 $ ./flag_example
@@ -71,8 +71,9 @@ $ ./flag_example -name=man
 0xc4200421d0
 ```
 
+### Why memory address?
 
-```
+```go
 package main
 
 import "fmt"
@@ -85,7 +86,7 @@ func main() {
 }
 ```
 
-
+### How to use go Flag
 ```
 $ go build flag_example.go
 
@@ -108,7 +109,8 @@ Usage of ./flag_example:
     	This is for name. (default "Jinsoo")
 ```
 
-flag.Parse()
+
+### flag.Parse()
 To parse the command line into the defined flags.
 
 ```
@@ -124,7 +126,7 @@ func main() {
 }
 ```
 
-Build fail
+### Build fail
 ```
 $ go build flag_example.go
 # command-line-arguments
@@ -132,7 +134,7 @@ $ go build flag_example.go
 ```
 
 
-Edit
+### Edit flag.StringVar
 ```
 func main() {
     name := flag.String("name", "Jinsoo", "This is for name.")
@@ -146,7 +148,7 @@ func main() {
 }
 ```
 
-Build Success
+### Build Success
 ```
 $ go build flag_example.go
 $ ./flag_example
@@ -154,7 +156,7 @@ Jinsoo
 bar
 ```
 
-
+### Use case
 ```
 ./flag_example -name=books -svar=bic
 flag provided but not defined: -svar
@@ -163,6 +165,7 @@ Usage of ./flag_example:
     	This is for name. (default "Jinsoo")
 ```
 
+### Move flag.Parse()
 
 ```
 func main() {
@@ -186,34 +189,34 @@ bic
 
 ## What's the difference?
 
-you can see every method in flag. below the link
-
-[flag.go](https://golang.org/src/flag/flag.go)
+[Official Document flag.go](https://golang.org/src/flag/flag.go)
 
 ### flag.String
 
-```
-// String defines a string flag with specified name, default value, and usage string. 
-// The return value is the address of a string variable that stores the value of the flag.
+String defines a string flag with specified name, default value, and usage string. 
 
+The return value is the **address** of a string variable that stores the value of the flag.
+
+```go
 func (*FlagSet) String
 func (f *FlagSet) String(name string, value string, usage string) *string
-
 ```
+
 
 ### flag.StringVar
 
-```
-// StringVar defines a string flag with specified name, default value, and usage string.
-// The argument p points to a string variable in which to store the value of the flag.
+StringVar defines a string flag with specified name, default value, and usage string.
 
+The argument p points to a string variable in which to store the value of the flag.
+
+```go
 func (f *FlagSet) StringVar(p *string, name string, value string, usage string) {
 	f.Var(newStringValue(value, p), name, usage)
 }
+```
 
 
-
-When Flag Redefine
+### When Flag Redefine
 
 ```
 package main
@@ -230,7 +233,22 @@ func main()  {
 }
 ```
 
-Redefine Error
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+### Redefine Error
+
 ```
 /private/var/folders/ph/tf09cxp10t32w2z853hk1lqc0000gn/T/___go_build_argument_example_go flag redefined: flagname
 panic: /private/var/folders/ph/tf09cxp10t32w2z853hk1lqc0000gn/T/___go_build_argument_example_go flag redefined: flagname
@@ -241,7 +259,7 @@ goroutine 1 [running]:
 
 ## Quiz 1. What will be printed when execute last line?
 
-```
+```go
 package main
 
 import "fmt"
@@ -252,52 +270,31 @@ func main()  {
     flag.Parse()
     fmt.Println(depart)
 }
+```
 
+```
 $ ./quiz01 -name=Books -name=Core Solution Group
-
 ```
 
 ### Please select right one.
 
 1. Books
 2. Core Solution Group
-3. 0xc42004e1e0(Memory address)
-4. Error!?
+3. Core
+4. 0xc42004e1e0(Memory address)
+5. Redefine Error!?
 
 
 
 
-## func (*FlagSet) Args
+### flag method - func (*FlagSet) Args
+Args returns the non-flag arguments.
+```go
+func (f *FlagSet) Args() []string 
 
 ```
-func (f *FlagSet) Args() []string
-Args returns the non-flag arguments. 
 
-```
 
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
 
 .
 
@@ -309,7 +306,7 @@ Args returns the non-flag arguments.
 
 ## Quiz 2. What will be printed when execute last line?
 
-```
+```go
 package main
 
 import "fmt"
@@ -351,7 +348,7 @@ $ ./quiz02 -flask=8080 -spring=5000
 
 .
 
-panic: runtime error: index out of range
+#### panic: runtime error: index out of range
 
 
 
