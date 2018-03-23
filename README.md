@@ -198,7 +198,6 @@ String defines a string flag with specified name, default value, and usage strin
 The return value is the **address** of a string variable that stores the value of the flag.
 
 ```go
-func (*FlagSet) String
 func (f *FlagSet) String(name string, value string, usage string) *string
 ```
 
@@ -210,10 +209,49 @@ StringVar defines a string flag with specified name, default value, and usage st
 The argument p points to a string variable in which to store the value of the flag.
 
 ```go
-func (f *FlagSet) StringVar(p *string, name string, value string, usage string) {
-	f.Var(newStringValue(value, p), name, usage)
+func (f *FlagSet) StringVar(p *string, name string, value string, usage string)
+```
+
+### flag.Parsed
+
+```go
+package main
+
+import "fmt"
+import "flag"
+
+func main() {
+    fmt.Println(flag.Parsed())
+    flag.Parse()
+    fmt.Println(flag.Parsed())
 }
 ```
+
+```
+false
+true
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### When Flag Redefine
@@ -349,8 +387,5 @@ $ ./quiz02 -flask=8080 -spring=5000
 .
 
 #### panic: runtime error: index out of range
-
-
-
 
 
